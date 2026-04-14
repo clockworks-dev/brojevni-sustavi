@@ -1,0 +1,850 @@
+<!DOCTYPE html>
+<html lang="hr" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Brojevni sustavi – pitanja s provedenih ispita</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root, [data-theme="light"] {
+      --text-xs: clamp(0.75rem, 0.7rem + 0.25vw, 0.875rem);
+      --text-sm: clamp(0.875rem, 0.8rem + 0.35vw, 1rem);
+      --text-base: clamp(1rem, 0.95rem + 0.25vw, 1.125rem);
+      --text-lg: clamp(1.125rem, 1rem + 0.75vw, 1.5rem);
+      --text-xl: clamp(1.5rem, 1.2rem + 1.25vw, 2.25rem);
+      --text-2xl: clamp(2rem, 1.2rem + 2.5vw, 3.5rem);
+
+      --space-1: 0.25rem;
+      --space-2: 0.5rem;
+      --space-3: 0.75rem;
+      --space-4: 1rem;
+      --space-5: 1.25rem;
+      --space-6: 1.5rem;
+      --space-8: 2rem;
+      --space-10: 2.5rem;
+      --space-12: 3rem;
+      --space-16: 4rem;
+      --space-20: 5rem;
+
+      --color-bg: #f7f6f2;
+      --color-surface: #f9f8f5;
+      --color-surface-2: #fbfbf9;
+      --color-surface-offset: #edeae5;
+      --color-border: #d4d1ca;
+      --color-text: #28251d;
+      --color-text-muted: #6f6b63;
+      --color-text-faint: #9f9a90;
+      --color-primary: #01696f;
+      --color-primary-hover: #0c4e54;
+      --color-primary-highlight: #cedcd8;
+      --shadow-sm: 0 1px 2px rgba(0,0,0,.05);
+      --shadow-md: 0 10px 30px rgba(26, 28, 29, .08);
+      --radius-sm: .5rem;
+      --radius-md: .85rem;
+      --radius-lg: 1.2rem;
+      --radius-xl: 1.5rem;
+      --font-display: 'Instrument Serif', Georgia, serif;
+      --font-body: 'Inter', Arial, sans-serif;
+      --content: 1100px;
+    }
+
+    [data-theme="dark"] {
+      --color-bg: #171614;
+      --color-surface: #1c1b19;
+      --color-surface-2: #201f1d;
+      --color-surface-offset: #2a2825;
+      --color-border: #393836;
+      --color-text: #ece8df;
+      --color-text-muted: #b5afa5;
+      --color-text-faint: #8d877d;
+      --color-primary: #67afb8;
+      --color-primary-hover: #8bc4cb;
+      --color-primary-highlight: #24363a;
+      --shadow-sm: 0 1px 2px rgba(0,0,0,.25);
+      --shadow-md: 0 14px 40px rgba(0,0,0,.35);
+    }
+
+    @media (prefers-color-scheme: dark) {
+      html:not([data-theme="light"]) {
+        --color-bg: #171614;
+        --color-surface: #1c1b19;
+        --color-surface-2: #201f1d;
+        --color-surface-offset: #2a2825;
+        --color-border: #393836;
+        --color-text: #ece8df;
+        --color-text-muted: #b5afa5;
+        --color-text-faint: #8d877d;
+        --color-primary: #67afb8;
+        --color-primary-hover: #8bc4cb;
+        --color-primary-highlight: #24363a;
+        --shadow-sm: 0 1px 2px rgba(0,0,0,.25);
+        --shadow-md: 0 14px 40px rgba(0,0,0,.35);
+      }
+    }
+
+    *, *::before, *::after { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: var(--font-body);
+      font-size: var(--text-base);
+      line-height: 1.65;
+      color: var(--color-text);
+      background:
+        radial-gradient(circle at top left, color-mix(in srgb, var(--color-primary) 10%, transparent), transparent 30%),
+        linear-gradient(180deg, var(--color-bg), var(--color-surface));
+    }
+    a { color: inherit; }
+    img, svg { display: block; max-width: 100%; }
+    button, input, select { font: inherit; }
+    .container { width: min(calc(100% - 2rem), var(--content)); margin-inline: auto; }
+    .skip-link {
+      position: absolute; left: 1rem; top: -3rem; background: var(--color-primary); color: white;
+      padding: .75rem 1rem; border-radius: var(--radius-sm); z-index: 10; text-decoration: none;
+    }
+    .skip-link:focus { top: 1rem; }
+
+    .site-header {
+      position: sticky; top: 0; z-index: 20;
+      backdrop-filter: blur(12px);
+      background: color-mix(in srgb, var(--color-bg) 78%, transparent);
+      border-bottom: 1px solid color-mix(in srgb, var(--color-text) 12%, transparent);
+    }
+    .header-inner {
+      display: flex; align-items: center; justify-content: space-between; gap: var(--space-4);
+      padding: .9rem 0;
+    }
+    .brand { display: flex; align-items: center; gap: .9rem; text-decoration: none; }
+    .brand-mark {
+      width: 2.6rem; height: 2.6rem; border-radius: .8rem; display: grid; place-items: center;
+      background: linear-gradient(135deg, var(--color-primary-highlight), color-mix(in srgb, var(--color-primary) 22%, var(--color-surface)));
+      color: var(--color-primary);
+      box-shadow: var(--shadow-sm);
+      flex: 0 0 auto;
+    }
+    .brand-title { font-size: var(--text-sm); font-weight: 800; letter-spacing: .08em; text-transform: uppercase; }
+    .brand-subtitle { font-size: var(--text-xs); color: var(--color-text-muted); }
+    .header-actions { display: flex; align-items: center; gap: .75rem; }
+
+    .theme-toggle, .control {
+      min-width: 44px; min-height: 44px; border-radius: 999px; border: 1px solid color-mix(in srgb, var(--color-text) 12%, transparent);
+      background: color-mix(in srgb, var(--color-surface) 85%, transparent);
+      color: var(--color-text); cursor: pointer; display: inline-flex; align-items: center; justify-content: center;
+      padding: 0 .95rem; transition: .2s ease;
+    }
+    .control:hover, .theme-toggle:hover { background: var(--color-surface-2); border-color: color-mix(in srgb, var(--color-text) 20%, transparent); }
+
+    .hero { padding: clamp(3rem, 8vw, 7rem) 0 var(--space-12); }
+    .hero-grid {
+      display: grid; grid-template-columns: 1.2fr .8fr; gap: var(--space-8); align-items: start;
+    }
+    .eyebrow {
+      display: inline-flex; align-items: center; gap: .5rem; padding: .45rem .8rem; border-radius: 999px;
+      background: var(--color-primary-highlight); color: var(--color-primary); font-size: var(--text-xs);
+      font-weight: 700; text-transform: uppercase; letter-spacing: .08em;
+    }
+    h1 {
+      margin: var(--space-5) 0 var(--space-4);
+      font-family: var(--font-display); font-weight: 500; line-height: 1.02; letter-spacing: -.03em;
+      font-size: var(--text-2xl);
+      max-width: 12ch;
+    }
+    .hero p {
+      max-width: 62ch; color: var(--color-text-muted); margin: 0 0 var(--space-6);
+    }
+    .hero-actions { display: flex; gap: .9rem; flex-wrap: wrap; }
+    .btn {
+      min-height: 44px; padding: .85rem 1.15rem; border-radius: 999px; text-decoration: none; font-size: var(--text-sm);
+      font-weight: 700; display: inline-flex; align-items: center; justify-content: center; gap: .55rem;
+      border: 1px solid transparent; transition: .2s ease;
+    }
+    .btn-primary { background: var(--color-primary); color: white; }
+    .btn-primary:hover { background: var(--color-primary-hover); }
+    .btn-secondary {
+      background: color-mix(in srgb, var(--color-surface) 88%, transparent);
+      border-color: color-mix(in srgb, var(--color-text) 12%, transparent);
+    }
+    .btn-secondary:hover { background: var(--color-surface-2); }
+
+    .stats {
+      display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-4);
+    }
+    .stat-card, .panel, .question {
+      background: color-mix(in srgb, var(--color-surface) 92%, transparent);
+      border: 1px solid color-mix(in srgb, var(--color-text) 10%, transparent);
+      box-shadow: var(--shadow-md);
+    }
+    .stat-card {
+      padding: var(--space-5); border-radius: var(--radius-lg);
+    }
+    .stat-value { font-family: var(--font-display); font-size: clamp(2rem, 2vw + 1rem, 3rem); line-height: 1; margin-bottom: .35rem; }
+    .stat-label { color: var(--color-text-muted); font-size: var(--text-sm); }
+
+    .main-grid {
+      display: grid; grid-template-columns: 280px minmax(0, 1fr); gap: var(--space-8);
+      padding-bottom: var(--space-20);
+    }
+    .sidebar {
+      position: sticky; top: 6rem; align-self: start;
+    }
+    .panel {
+      border-radius: var(--radius-xl); padding: var(--space-5);
+    }
+    .panel h2, .content-head h2 {
+      margin: 0 0 var(--space-4); font-size: var(--text-lg); line-height: 1.15;
+    }
+    .panel p { margin: 0; color: var(--color-text-muted); font-size: var(--text-sm); }
+
+    .filters { display: grid; gap: .75rem; margin-top: var(--space-5); }
+    .filters input, .filters select {
+      width: 100%; padding: .85rem 1rem; border-radius: .9rem; background: var(--color-surface-2);
+      border: 1px solid color-mix(in srgb, var(--color-text) 10%, transparent); color: var(--color-text);
+    }
+
+    .legend {
+      margin-top: var(--space-5); display: grid; gap: .7rem;
+    }
+    .legend-item {
+      display: flex; align-items: center; gap: .7rem; color: var(--color-text-muted); font-size: var(--text-sm);
+    }
+    .swatch { width: .85rem; height: .85rem; border-radius: 999px; }
+    .swatch.mcq { background: #2f7d4a; }
+    .swatch.open { background: #b06611; }
+
+    .content-head {
+      display: flex; justify-content: space-between; gap: var(--space-4); align-items: end; margin-bottom: var(--space-5);
+    }
+    .content-head p { margin: 0; color: var(--color-text-muted); }
+
+    .questions {
+      display: grid; gap: var(--space-4);
+    }
+    .question {
+      border-radius: var(--radius-xl); padding: var(--space-5);
+      content-visibility: auto;
+      contain-intrinsic-size: 340px;
+    }
+    .question-top {
+      display: flex; gap: .75rem; align-items: center; justify-content: space-between; flex-wrap: wrap; margin-bottom: .85rem;
+    }
+    .q-id { font-weight: 800; font-size: var(--text-sm); }
+    .tag {
+      display: inline-flex; align-items: center; gap: .4rem; padding: .35rem .7rem; border-radius: 999px;
+      font-size: var(--text-xs); font-weight: 700; letter-spacing: .05em; text-transform: uppercase;
+    }
+    .tag.mcq { background: rgba(47,125,74,.13); color: #2f7d4a; }
+    .tag.open { background: rgba(176,102,17,.14); color: #8a4e08; }
+    .source {
+      color: var(--color-text-faint); font-size: var(--text-xs); margin-bottom: .85rem;
+    }
+    .prompt {
+      font-size: var(--text-base); line-height: 1.7; margin-bottom: 1rem;
+    }
+    .options {
+      display: grid; gap: .65rem;
+    }
+    .option {
+      padding: .85rem 1rem; border-radius: .95rem; background: var(--color-surface-2);
+      border: 1px solid color-mix(in srgb, var(--color-text) 8%, transparent);
+    }
+
+    .footer {
+      border-top: 1px solid color-mix(in srgb, var(--color-text) 10%, transparent);
+      padding: var(--space-8) 0 var(--space-10);
+      color: var(--color-text-muted);
+      font-size: var(--text-sm);
+    }
+
+    @media (max-width: 960px) {
+      .hero-grid, .main-grid { grid-template-columns: 1fr; }
+      .sidebar { position: static; }
+      .content-head { align-items: start; flex-direction: column; }
+    }
+
+    @media (max-width: 640px) {
+      .header-inner { align-items: start; flex-direction: column; }
+      .stats { grid-template-columns: 1fr; }
+      h1 { max-width: 100%; }
+      .panel, .question, .stat-card { padding: var(--space-4); }
+      .container { width: min(calc(100% - 1rem), var(--content)); }
+    }
+
+    @media print {
+      .site-header, .sidebar, .hero-actions, .footer { display: none !important; }
+      body { background: white; color: black; }
+      .hero { padding: 0 0 1rem; }
+      .main-grid { display: block; }
+      .question, .panel, .stat-card { box-shadow: none; border: 1px solid #aaa; background: white; }
+      .questions { gap: .75rem; }
+    }
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#maincontent">Preskoči na sadržaj</a>
+
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="#top" aria-label="Početak stranice">
+        <span class="brand-mark" aria-hidden="true">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M4 7.5 12 3l8 4.5-8 4.5L4 7.5Z" />
+            <path d="M4 12l8 4.5 8-4.5" />
+            <path d="M4 16.5 12 21l8-4.5" />
+          </svg>
+        </span>
+        <span>
+          <span class="brand-title">Brojevni sustavi</span>
+        </span>
+      </a>
+      <div class="header-actions">
+        <button class="control" type="button" id="printBtn" aria-label="Ispis stranice">Ispis</button>
+        <button class="theme-toggle" type="button" data-theme-toggle aria-label="Promijeni temu">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main id="maincontent">
+    <section class="hero">
+      <div class="container hero-grid">
+        <div>
+          <span class="eyebrow">Informatika • državna matura</span>
+          <h1>Zadaci iz brojevnih sustava</h1>
+          <p>Zadaci su podijeljeni na pitanja s ponuđenim odgovorima i otvorene zadatke.</p>
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="#zadaci">Pregledaj zadatke</a>
+            <a class="btn btn-secondary" href="https://arhiva-2021.loomen.carnet.hr/mod/book/view.php?id=118701&chapterid=46894" target="_blank" rel="noopener noreferrer">Izvorni sadržaj</a>
+          </div>
+        </div>
+        <div class="stats" aria-label="Sažetak sadržaja">
+          <article class="stat-card">
+            <div class="stat-value">62</div>
+            <div class="stat-label">ukupno zadatka</div>
+          </article>
+          <article class="stat-card">
+            <div class="stat-value">42</div>
+            <div class="stat-label">zadataka s odgovorima</div>
+          </article>
+          <article class="stat-card">
+            <div class="stat-value">20</div>
+            <div class="stat-label">otvorenih zadataka</div>
+          </article>
+          <article class="stat-card">
+            <div class="stat-value">2008–2016</div>
+            <div class="stat-label">raspon ispita</div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="container main-grid" id="zadaci">
+      <aside class="sidebar">
+        <div class="panel">
+          <h2>Brzo pretraživanje</h2>
+          <p>Filtriraj zadatke po tekstu i tipu prikaza.</p>
+          <div class="filters">
+            <label>
+              <span class="sr-only">Pretraži zadatke</span>
+              <input type="search" id="searchInput" placeholder="Upiši broj, godinu ili pojam…" />
+            </label>
+            <label>
+              <span class="sr-only">Odaberi tip zadatka</span>
+              <select id="typeFilter">
+                <option value="all">Svi zadaci</option>
+                <option value="mcq">S ponuđenim odgovorima</option>
+                <option value="open">Otvoreni zadaci</option>
+              </select>
+            </label>
+          </div>
+          <div class="legend" aria-label="Legenda tipova zadataka">
+            <div class="legend-item"><span class="swatch mcq"></span> Višestruki izbor</div>
+            <div class="legend-item"><span class="swatch open"></span> Otvoreni zadatak</div>
+          </div>
+        </div>
+      </aside>
+
+      <div>
+        <div class="content-head">
+          <div>
+            <h2>Popis zadataka</h2>
+            <p>Prikaz je optimiziran za čitanje, nastavu i ispis.</p>
+          </div>
+          <p id="resultsCount" aria-live="polite">Prikazano: 62 zadatka</p>
+        </div>
+
+        <div class="questions" id="questionsList">
+
+          <article class="question" data-type="open" data-search="1 ogledni primjerak testa za državnu maturu prikažite broj baba16 u binarnom brojevnom sustavu">
+            <div class="question-top"><span class="q-id">1.</span><span class="tag open">Otvoreni</span></div>
+            <div class="source">Ogledni primjerak testa za državnu maturu</div>
+            <div class="prompt">Prikažite broj <strong>(BABA)<sub>16</sub></strong> u binarnom brojevnom sustavu.</div>
+          </article>
+
+          <article class="question" data-type="mcq" data-search="2 primjer testa za državnu maturu 2008 što je od navedenoga binarni zapis dekadskoga broja 23.125">
+            <div class="question-top"><span class="q-id">2.</span><span class="tag mcq">Višestruki izbor</span></div>
+            <div class="source">Primjer testa za državnu maturu, 2008.</div>
+            <div class="prompt">Što je od navedenoga binarni zapis dekadskoga broja 23.125?</div>
+            <div class="options"><div class="option">a) 11101.001</div><div class="option">b) 10111.1111101</div><div class="option">c) 10111.001</div><div class="option">d) 10111.1011111</div></div>
+          </article>
+
+          <article class="question" data-type="mcq" data-search="3 primjer testa za državnu maturu 2008 heksadekadski prikaz nekog broja je 5a koji je dekadski ekvivalent tog broja">
+            <div class="question-top"><span class="q-id">3.</span><span class="tag mcq">Višestruki izbor</span></div>
+            <div class="source">Primjer testa za državnu maturu, 2008.</div>
+            <div class="prompt">Heksadekadski prikaz nekog broja je 5A. Koji je dekadski ekvivalent tog broja?</div>
+            <div class="options"><div class="option">a) 510</div><div class="option">b) 45</div><div class="option">c) 90</div><div class="option">d) 180</div></div>
+          </article>
+
+          <article class="question" data-type="mcq" data-search="4 primjer testa za državnu maturu 2008 koji je binarni prikaz broja 136 osam">
+            <div class="question-top"><span class="q-id">4.</span><span class="tag mcq">Višestruki izbor</span></div>
+            <div class="source">Primjer testa za državnu maturu, 2008.</div>
+            <div class="prompt">Koji je binarni prikaz broja 136<sub>(8)</sub>?</div>
+            <div class="options"><div class="option">a) 10001000</div><div class="option">b) 11010110</div><div class="option">c) 111110</div><div class="option">d) 1011110</div></div>
+          </article>
+
+          <article class="question" data-type="mcq" data-search="5 probna državna matura 2009 koji je dekadski zapis binarnoga broja 101,11">
+            <div class="question-top"><span class="q-id">5.</span><span class="tag mcq">Višestruki izbor</span></div>
+            <div class="source">Probna državna matura, 2009.</div>
+            <div class="prompt">Koji je dekadski zapis binarnoga broja 101,11?</div>
+            <div class="options"><div class="option">a) 5,75</div><div class="option">b) 3,75</div><div class="option">c) 5,3</div><div class="option">d) 3,3</div></div>
+          </article>
+
+          <article class="question" data-type="mcq" data-search="6 probna državna matura 2009 koji je heksadekadski zapis dekadskoga broja 58">
+            <div class="question-top"><span class="q-id">6.</span><span class="tag mcq">Višestruki izbor</span></div>
+            <div class="source">Probna državna matura, 2009.</div>
+            <div class="prompt">Koji je heksadekadski zapis dekadskoga broja 58?</div>
+            <div class="options"><div class="option">a) A3</div><div class="option">b) E2</div><div class="option">c) 3A</div><div class="option">d) 2E</div></div>
+          </article>
+
+          <article class="question" data-type="mcq" data-search="7 probna državna matura 2009 koji je oktalni zapis binarnoga broja 1000100101">
+            <div class="question-top"><span class="q-id">7.</span><span class="tag mcq">Višestruki izbor</span></div>
+            <div class="source">Probna državna matura, 2009.</div>
+            <div class="prompt">Koji je oktalni zapis binarnoga broja 1000100101?</div>
+            <div class="options"><div class="option">a) 4224</div><div class="option">b) 1045</div><div class="option">c) 549</div><div class="option">d) 1023</div></div>
+          </article>
+
+          <article class="question" data-type="open" data-search="8 probna državna matura 2009 koji je binarni zapis broja 1234 16">
+            <div class="question-top"><span class="q-id">8.</span><span class="tag open">Otvoreni</span></div>
+            <div class="source">Probna državna matura, 2009.</div>
+            <div class="prompt">Koji je binarni zapis broja <strong>(1234)<sub>16</sub></strong>?</div>
+          </article>
+
+          <article class="question" data-type="mcq" data-search="9 državna matura 2010 ljetni rok zadatak 12 koji od brojeva nije zapis broja u oktalnome sustavu">
+            <div class="question-top"><span class="q-id">9.</span><span class="tag mcq">Višestruki izbor</span></div>
+            <div class="source">Državna matura, 2010., ljetni rok, zadatak 12</div>
+            <div class="prompt">Koji od brojeva nije zapis broja u oktalnome sustavu?</div>
+            <div class="options"><div class="option">a) 132</div><div class="option">b) 346</div><div class="option">c) 685</div><div class="option">d) 1011</div></div>
+          </article>
+
+          <article class="question" data-type="mcq" data-search="10 državna matura 2010 ljetni rok zadatak 13 koji je oktalni zapis heksadekadskoga broja 2345">
+            <div class="question-top"><span class="q-id">10.</span><span class="tag mcq">Višestruki izbor</span></div>
+            <div class="source">Državna matura, 2010., ljetni rok, zadatak 13</div>
+            <div class="prompt">Koji je oktalni zapis heksadekadskoga broja 2345?</div>
+            <div class="options"><div class="option">a) 12505</div><div class="option">b) 21505</div><div class="option">c) 43212</div><div class="option">d) 50512</div></div>
+          </article>
+
+          <article class="question" data-type="mcq" data-search="11 državna matura 2010 ljetni rok zadatak 14 koji je binarni zapis heksadekadskoga broja bcde">
+            <div class="question-top"><span class="q-id">11.</span><span class="tag mcq">Višestruki izbor</span></div>
+            <div class="source">Državna matura, 2010., ljetni rok, zadatak 14</div>
+            <div class="prompt">Koji je binarni zapis heksadekadskoga broja BCDE?</div>
+            <div class="options"><div class="option">a) 1011110011011110</div><div class="option">b) 1011110110111110</div><div class="option">c) 1100101111011110</div><div class="option">d) 1110110111001011</div></div>
+          </article>
+
+          <article class="question" data-type="open" data-search="12 državna matura 2010 ljetni rok zadatak 31 koji je binarni zapis broja 536b 16">
+            <div class="question-top"><span class="q-id">12.</span><span class="tag open">Otvoreni</span></div>
+            <div class="source">Državna matura, 2010., ljetni rok, zadatak 31</div>
+            <div class="prompt">Koji je binarni zapis broja <strong>(536B)<sub>16</sub></strong>?</div>
+          </article>
+
+          <article class="question" data-type="mcq" data-search="13 državna matura 2010 jesenski rok zadatak 12 koji je binarni zapis dekadskoga broja 6,75">
+            <div class="question-top"><span class="q-id">13.</span><span class="tag mcq">Višestruki izbor</span></div>
+            <div class="source">Državna matura, 2010., jesenski rok, zadatak 12</div>
+            <div class="prompt">Koji je binarni zapis dekadskoga broja 6,75?</div>
+            <div class="options"><div class="option">a) 10,1001011</div><div class="option">b) 10,11</div><div class="option">c) 110,1001011</div><div class="option">d) 110,11</div></div>
+          </article>
+
+          <article class="question" data-type="mcq" data-search="14 državna matura 2010 jesenski rok zadatak 13 koji je heksadekadski zapis binarnoga broja 1101011,01">
+            <div class="question-top"><span class="q-id">14.</span><span class="tag mcq">Višestruki izbor</span></div>
+            <div class="source">Državna matura, 2010., jesenski rok, zadatak 13</div>
+            <div class="prompt">Koji je heksadekadski zapis binarnoga broja 1101011,01?</div>
+            <div class="options"><div class="option">a) D6,8</div><div class="option">b) 1AD</div><div class="option">c) 107,25</div><div class="option">d) 6B,4</div></div>
+          </article>
+
+          <article class="question" data-type="mcq" data-search="15 državna matura 2010 jesenski rok zadatak 14 koji je binarni zapis oktalnoga broja 15">
+            <div class="question-top"><span class="q-id">15.</span><span class="tag mcq">Višestruki izbor</span></div>
+            <div class="source">Državna matura, 2010., jesenski rok, zadatak 14</div>
+            <div class="prompt">Koji je binarni zapis oktalnoga broja 15?</div>
+            <div class="options"><div class="option">a) 1011</div><div class="option">b) 1101</div><div class="option">c) 1111</div><div class="option">d) 10101</div></div>
+          </article>
+
+          <article class="question" data-type="open" data-search="16 državna matura 2010 jesenski rok zadatak 31 koji je binarni zapis broja 9e7d 16">
+            <div class="question-top"><span class="q-id">16.</span><span class="tag open">Otvoreni</span></div>
+            <div class="source">Državna matura, 2010., jesenski rok, zadatak 31</div>
+            <div class="prompt">Koji je binarni zapis broja <strong>(9E7D)<sub>16</sub></strong>?</div>
+          </article>
+
+          <article class="question" data-type="mcq" data-search="17 državna matura 2011 ljetni rok zadatak 13 koji je heksadekadski zapis oktalnoga broja 2504">
+            <div class="question-top"><span class="q-id">17.</span><span class="tag mcq">Višestruki izbor</span></div>
+            <div class="source">Državna matura, 2011., ljetni rok, zadatak 13</div>
+            <div class="prompt">Koji je heksadekadski zapis oktalnoga broja 2504?</div>
+            <div class="options"><div class="option">a) 254</div><div class="option">b) 445</div><div class="option">c) 452</div><div class="option">d) 544</div></div>
+          </article>
+
+          <article class="question" data-type="mcq" data-search="18 državna matura 2011 ljetni rok zadatak 14 koji je oktalni zapis binarnoga broja 10101111001100">
+            <div class="question-top"><span class="q-id">18.</span><span class="tag mcq">Višestruki izbor</span></div>
+            <div class="source">Državna matura, 2011., ljetni rok, zadatak 14</div>
+            <div class="prompt">Koji je oktalni zapis binarnoga broja 10101111001100?</div>
+            <div class="options"><div class="option">a) 25714</div><div class="option">b) 53630</div><div class="option">c) 2BCC</div><div class="option">d) 5363</div></div>
+          </article>
+
+          <article class="question" data-type="mcq" data-search="19 državna matura 2011 ljetni rok zadatak 15 koji je broj u heksadekadskome sustavu neposredni sljedbenik heksadekadskoga broja 9f">
+            <div class="question-top"><span class="q-id">19.</span><span class="tag mcq">Višestruki izbor</span></div>
+            <div class="source">Državna matura, 2011., ljetni rok, zadatak 15</div>
+            <div class="prompt">Koji je broj u heksadekadskome sustavu neposredni sljedbenik heksadekadskoga broja 9F?</div>
+            <div class="options"><div class="option">a) 100</div><div class="option">b) 910</div><div class="option">c) A0</div><div class="option">d) A10</div></div>
+          </article>
+
+          <article class="question" data-type="open" data-search="20 državna matura 2011 ljetni rok zadatak 31 koliko znamenaka 1 ima broj 920f 16 kada je zapisan u oktalnome brojevnome sustavu">
+            <div class="question-top"><span class="q-id">20.</span><span class="tag open">Otvoreni</span></div>
+            <div class="source">Državna matura, 2011., ljetni rok, zadatak 31</div>
+            <div class="prompt">Koliko znamenaka „1” ima broj <strong>(920F)<sub>16</sub></strong> kada je zapisan u oktalnome brojevnome sustavu?</div>
+          </article>
+
+          <article class="question" data-type="mcq" data-search="21 državna matura 2011 jesenski rok zadatak 13 koji je heksadekadski zapis oktalnoga broja 12674">
+            <div class="question-top"><span class="q-id">21.</span><span class="tag mcq">Višestruki izbor</span></div>
+            <div class="source">Državna matura, 2011., jesenski rok, zadatak 13</div>
+            <div class="prompt">Koji je heksadekadski zapis oktalnoga broja 12674?</div>
+            <div class="options"><div class="option">a) CB51</div><div class="option">b) 15BC</div><div class="option">c) CBD</div><div class="option">d) DBC</div></div>
+          </article>
+
+          <article class="question" data-type="mcq" data-search="22 državna matura 2011 jesenski rok zadatak 14 koji je oktalni zapis binarnoga broja 1101011100001">
+            <div class="question-top"><span class="q-id">22.</span><span class="tag mcq">Višestruki izbor</span></div>
+            <div class="source">Državna matura, 2011., jesenski rok, zadatak 14</div>
+            <div class="prompt">Koji je oktalni zapis binarnoga broja 1101011100001?</div>
+            <div class="options"><div class="option">a) 6561</div><div class="option">b) 15341</div><div class="option">c) 65601</div><div class="option">d) 65604</div></div>
+          </article>
+
+          <article class="question" data-type="mcq" data-search="23 državna matura 2011 jesenski rok zadatak 15 kako se u heksadekadskome obliku zapisuje neposredni prethodnik broja 200 16">
+            <div class="question-top"><span class="q-id">23.</span><span class="tag mcq">Višestruki izbor</span></div>
+            <div class="source">Državna matura, 2011., jesenski rok, zadatak 15</div>
+            <div class="prompt">Kako se u heksadekadskome obliku zapisuje neposredni prethodnik broja (200)<sub>16</sub>?</div>
+            <div class="options"><div class="option">a) 100</div><div class="option">b) 1FF</div><div class="option">c) 199</div><div class="option">d) 201</div></div>
+          </article>
+
+          <article class="question" data-type="open" data-search="24 državna matura 2011 jesenski rok zadatak 31 koliko znamenaka 0 ima broj 3887 16 kada je zapisan u oktalnome brojevnome sustavu">
+            <div class="question-top"><span class="q-id">24.</span><span class="tag open">Otvoreni</span></div>
+            <div class="source">Državna matura, 2011., jesenski rok, zadatak 31</div>
+            <div class="prompt">Koliko znamenaka „0” ima broj <strong>(3887)<sub>16</sub></strong> kada je zapisan u oktalnome brojevnome sustavu (ako se prilikom zapisivanja ne zapisuje vodeće nule)?</div>
+          </article>
+
+          <article class="question" data-type="mcq" data-search="25 državna matura 2012 ljetni rok zadatak 9 koji je heksadekadski ekvivalent dekadskog broja 257">
+            <div class="question-top"><span class="q-id">25.</span><span class="tag mcq">Višestruki izbor</span></div>
+            <div class="source">Državna matura, 2012., ljetni rok, zadatak 9</div>
+            <div class="prompt">Koji je heksadekadski ekvivalent dekadskog broja 257?</div>
+            <div class="options"><div class="option">a) A01</div><div class="option">b) 101</div><div class="option">c) 110</div><div class="option">d) 10A</div></div>
+          </article>
+
+          <article class="question" data-type="mcq" data-search="26 državna matura 2012 ljetni rok zadatak 10 koji je oktalni ekvivalent broja 1011,1101 2">
+            <div class="question-top"><span class="q-id">26.</span><span class="tag mcq">Višestruki izbor</span></div>
+            <div class="source">Državna matura, 2012., ljetni rok, zadatak 10</div>
+            <div class="prompt">Koji je oktalni ekvivalent broja 1011,1101<sub>(2)</sub>?</div>
+            <div class="options"><div class="option">a) 13,61</div><div class="option">b) 13,64</div><div class="option">c) 51,61</div><div class="option">d) 51,64</div></div>
+          </article>
+
+          <article class="question" data-type="open" data-search="27 državna matura 2012 ljetni rok zadatak 23 napišite dekadski zapis oktalnog broja 75,4">
+            <div class="question-top"><span class="q-id">27.</span><span class="tag open">Otvoreni</span></div>
+            <div class="source">Državna matura, 2012., ljetni rok, zadatak 23</div>
+            <div class="prompt">Napišite dekadski zapis oktalnog broja 75,4.</div>
+          </article>
+
+          <article class="question" data-type="open" data-search="28 državna matura 2012 ljetni rok zadatak 25 koji je heksadekadski zapis binarnog broja 110101101,11">
+            <div class="question-top"><span class="q-id">28.</span><span class="tag open">Otvoreni</span></div>
+            <div class="source">Državna matura, 2012., ljetni rok, zadatak 25</div>
+            <div class="prompt">Koji je heksadekadski zapis binarnog broja 110101101,11?</div>
+          </article>
+
+          <article class="question" data-type="mcq" data-search="29 državna matura 2012 jesenski rok zadatak 9 koji je heksadekadski ekvivalent dekadskog broja 254">
+            <div class="question-top"><span class="q-id">29.</span><span class="tag mcq">Višestruki izbor</span></div>
+            <div class="source">Državna matura, 2012., jesenski rok, zadatak 9</div>
+            <div class="prompt">Koji je heksadekadski ekvivalent dekadskog broja 254?</div>
+            <div class="options"><div class="option">a) FE</div><div class="option">b) EF</div><div class="option">c) EE</div><div class="option">d) FF</div></div>
+          </article>
+
+          <article class="question" data-type="mcq" data-search="30 državna matura 2012 jesenski rok zadatak 10 koji je binarni prikaz broja 765 8">
+            <div class="question-top"><span class="q-id">30.</span><span class="tag mcq">Višestruki izbor</span></div>
+            <div class="source">Državna matura, 2012., jesenski rok, zadatak 10</div>
+            <div class="prompt">Koji je binarni prikaz broja 765<sub>(8)</sub>?</div>
+            <div class="options"><div class="option">a) 111000111</div><div class="option">b) 101111101</div><div class="option">c) 101011111</div><div class="option">d) 111110101</div></div>
+          </article>
+
+          <article class="question" data-type="mcq" data-search="31 državna matura 2012 jesenski rok zadatak 11 koji je rezultat zbrajanja binarnih brojeva 111101 i 101111">
+            <div class="question-top"><span class="q-id">31.</span><span class="tag mcq">Višestruki izbor</span></div>
+            <div class="source">Državna matura, 2012., jesenski rok, zadatak 11</div>
+            <div class="prompt">Koji je rezultat zbrajanja binarnih brojeva 111101 i 101111?</div>
+            <div class="options"><div class="option">a) 1101100</div><div class="option">b) 1001100</div><div class="option">c) 1011101</div><div class="option">d) 1110111</div></div>
+          </article>
+
+          <article class="question" data-type="open" data-search="32 državna matura 2012 jesenski rok zadatak 23 napišite binarni zapis dekadskog broja 17,375">
+            <div class="question-top"><span class="q-id">32.</span><span class="tag open">Otvoreni</span></div>
+            <div class="source">Državna matura, 2012., jesenski rok, zadatak 23</div>
+            <div class="prompt">Napišite binarni zapis dekadskog broja 17,375.</div>
+          </article>
+
+          <article class="question" data-type="open" data-search="33 državna matura 2012 jesenski rok zadatak 25 koliko znamenaka 1 ima broj ed37 16 kada je zapisan u binarnom brojevnom sustavu">
+            <div class="question-top"><span class="q-id">33.</span><span class="tag open">Otvoreni</span></div>
+            <div class="source">Državna matura, 2012., jesenski rok, zadatak 25</div>
+            <div class="prompt">Koliko znamenaka „1” ima broj ED37<sub>(16)</sub> kada je zapisan u binarnom brojevnom sustavu?</div>
+          </article>
+
+          <article class="question" data-type="mcq" data-search="34 državna matura 2013 ljetni rok zadatak 9 koji je heksadekadski zapis dekadskoga broja 40">
+            <div class="question-top"><span class="q-id">34.</span><span class="tag mcq">Višestruki izbor</span></div>
+            <div class="source">Državna matura, 2013., ljetni rok, zadatak 9</div>
+            <div class="prompt">Koji je heksadekadski zapis dekadskoga broja 40?</div>
+            <div class="options"><div class="option">a) 28</div><div class="option">b) 64</div><div class="option">c) 82</div><div class="option">d) 128</div></div>
+          </article>
+
+          <article class="question" data-type="mcq" data-search="35 državna matura 2013 ljetni rok zadatak 10 koji je dekadski zapis binarnoga broja 101,11">
+            <div class="question-top"><span class="q-id">35.</span><span class="tag mcq">Višestruki izbor</span></div>
+            <div class="source">Državna matura, 2013., ljetni rok, zadatak 10</div>
+            <div class="prompt">Koji je dekadski zapis binarnoga broja 101,11?</div>
+            <div class="options"><div class="option">a) 5,75</div><div class="option">b) 5,3</div><div class="option">c) 4,75</div><div class="option">d) 4,3</div></div>
+          </article>
+
+          <article class="question" data-type="open" data-search="36 državna matura 2013 ljetni rok zadatak 24 koji je dekadski zapis oktalnoga broja 63,2">
+            <div class="question-top"><span class="q-id">36.</span><span class="tag open">Otvoreni</span></div>
+            <div class="source">Državna matura, 2013., ljetni rok, zadatak 24</div>
+            <div class="prompt">Koji je dekadski zapis oktalnoga broja 63,2?</div>
+          </article>
+
+          <article class="question" data-type="open" data-search="37 državna matura 2013 ljetni rok zadatak 25 koji je heksadekadski zapis binarnoga broja 101010010100,01">
+            <div class="question-top"><span class="q-id">37.</span><span class="tag open">Otvoreni</span></div>
+            <div class="source">Državna matura, 2013., ljetni rok, zadatak 25</div>
+            <div class="prompt">Koji je heksadekadski zapis binarnoga broja 101010010100,01?</div>
+          </article>
+
+          <article class="question" data-type="mcq" data-search="38 državna matura 2013 jesenski rok zadatak 9 koji je oktalni zapis heksadekadskoga broja 1a">
+            <div class="question-top"><span class="q-id">38.</span><span class="tag mcq">Višestruki izbor</span></div>
+            <div class="source">Državna matura, 2013., jesenski rok, zadatak 9</div>
+            <div class="prompt">Koji je oktalni zapis heksadekadskoga broja 1A?</div>
+            <div class="options"><div class="option">a) 16</div><div class="option">b) 20</div><div class="option">c) 26</div><div class="option">d) 32</div></div>
+          </article>
+
+          <article class="question" data-type="mcq" data-search="39 državna matura 2013 jesenski rok zadatak 10 koji je heksadekadski zapis binarnoga broja 10110110000,1">
+            <div class="question-top"><span class="q-id">39.</span><span class="tag mcq">Višestruki izbor</span></div>
+            <div class="source">Državna matura, 2013., jesenski rok, zadatak 10</div>
+            <div class="prompt">Koji je heksadekadski zapis binarnoga broja 10110110000,1?</div>
+            <div class="options"><div class="option">a) 5B0,1</div><div class="option">b) B60,8</div><div class="option">c) B6,1</div><div class="option">d) 5B0,8</div></div>
+          </article>
+
+          <article class="question" data-type="open" data-search="40 državna matura 2013 jesenski rok zadatak 24 koji je binarni zapis oktalnoga broja 16,3">
+            <div class="question-top"><span class="q-id">40.</span><span class="tag open">Otvoreni</span></div>
+            <div class="source">Državna matura, 2013., jesenski rok, zadatak 24</div>
+            <div class="prompt">Koji je binarni zapis oktalnoga broja 16,3?</div>
+          </article>
+
+          <article class="question" data-type="open" data-search="41 državna matura 2013 jesenski rok zadatak 25 koji je dekadski zapis binarnoga broja 101101,01">
+            <div class="question-top"><span class="q-id">41.</span><span class="tag open">Otvoreni</span></div>
+            <div class="source">Državna matura, 2013., jesenski rok, zadatak 25</div>
+            <div class="prompt">Koji je dekadski zapis binarnoga broja 101101,01?</div>
+          </article>
+
+          <article class="question" data-type="mcq" data-search="42 državna matura 2014 ljetni rok zadatak 9 koji je rezultat zbrajanja binarnih brojeva 1011101 i 1101110">
+            <div class="question-top"><span class="q-id">42.</span><span class="tag mcq">Višestruki izbor</span></div>
+            <div class="source">Državna matura, 2014., ljetni rok, zadatak 9</div>
+            <div class="prompt">Koji je rezultat zbrajanja binarnih brojeva 1011101 i 1101110?</div>
+            <div class="options"><div class="option">a) 1001011</div><div class="option">b) 11001011</div><div class="option">c) 10110011</div><div class="option">d) 10111011</div></div>
+          </article>
+
+          <article class="question" data-type="mcq" data-search="43 državna matura 2014 ljetni rok zadatak 10 koji je heksadekadski zapis broja 1100,1012">
+            <div class="question-top"><span class="q-id">43.</span><span class="tag mcq">Višestruki izbor</span></div>
+            <div class="source">Državna matura, 2014., ljetni rok, zadatak 10</div>
+            <div class="prompt">Koji je heksadekadski zapis broja 1100,101<sub>2</sub>?</div>
+            <div class="options"><div class="option">a) A,5</div><div class="option">b) C,5</div><div class="option">c) C,A</div><div class="option">d) 14,A</div></div>
+          </article>
+
+          <article class="question" data-type="open" data-search="44 državna matura 2014 ljetni rok zadatak 23 napišite binarni zapis dekadskoga broja 26,125">
+            <div class="question-top"><span class="q-id">44.</span><span class="tag open">Otvoreni</span></div>
+            <div class="source">Državna matura, 2014., ljetni rok, zadatak 23</div>
+            <div class="prompt">Napišite binarni zapis dekadskoga broja 26,125.</div>
+          </article>
+
+          <article class="question" data-type="open" data-search="45 državna matura 2014 ljetni rok zadatak 24 koliko znamenaka 0 ima broj 9ac3 16 kada je zapisan u binarnome brojevnom sustavu">
+            <div class="question-top"><span class="q-id">45.</span><span class="tag open">Otvoreni</span></div>
+            <div class="source">Državna matura, 2014., ljetni rok, zadatak 24</div>
+            <div class="prompt">Koliko znamenaka „0” ima broj 9AC3<sub>(16)</sub> kada je zapisan u binarnome brojevnom sustavu?</div>
+          </article>
+
+          <article class="question" data-type="mcq" data-search="46 državna matura 2014 jesenski rok zadatak 9 koji je rezultat zbrajanja binarnih brojeva 1101101 i 101010">
+            <div class="question-top"><span class="q-id">46.</span><span class="tag mcq">Višestruki izbor</span></div>
+            <div class="source">Državna matura, 2014., jesenski rok, zadatak 9</div>
+            <div class="prompt">Koji je rezultat zbrajanja binarnih brojeva 1101101 i 101010?</div>
+            <div class="options"><div class="option">a) 11000001</div><div class="option">b) 10000001</div><div class="option">c) 11010111</div><div class="option">d) 10010111</div></div>
+          </article>
+
+          <article class="question" data-type="mcq" data-search="47 državna matura 2014 jesenski rok zadatak 10 koji je broj u heksadekadskome brojevnom sustavu točno dvostruko veći od dekadskoga broja 86">
+            <div class="question-top"><span class="q-id">47.</span><span class="tag mcq">Višestruki izbor</span></div>
+            <div class="source">Državna matura, 2014., jesenski rok, zadatak 10</div>
+            <div class="prompt">Koji je broj u heksadekadskome brojevnom sustavu točno dvostruko veći od dekadskoga broja 86?</div>
+            <div class="options"><div class="option">a) C</div><div class="option">b) AC</div><div class="option">c) CA</div><div class="option">d) 172</div></div>
+          </article>
+
+          <article class="question" data-type="open" data-search="48 državna matura 2014 jesenski rok zadatak 23 napišite binarni zapis dekadskoga broja 19,375">
+            <div class="question-top"><span class="q-id">48.</span><span class="tag open">Otvoreni</span></div>
+            <div class="source">Državna matura, 2014., jesenski rok, zadatak 23</div>
+            <div class="prompt">Napišite binarni zapis dekadskoga broja 19,375.</div>
+          </article>
+
+          <article class="question" data-type="open" data-search="49 državna matura 2014 jesenski rok zadatak 24 koliko znamenaka 1 ima broj 4725 8 kada je zapisan u binarnome brojevnom sustavu">
+            <div class="question-top"><span class="q-id">49.</span><span class="tag open">Otvoreni</span></div>
+            <div class="source">Državna matura, 2014., jesenski rok, zadatak 24</div>
+            <div class="prompt">Koliko znamenaka „1” ima broj 4725<sub>(8)</sub> kada je zapisan u binarnome brojevnom sustavu?</div>
+          </article>
+
+          <article class="question" data-type="mcq" data-search="50 2015 ljetni rok zadatak 9 koji je binarni zapis dekadskoga broja 29 10">
+            <div class="question-top"><span class="q-id">50.</span><span class="tag mcq">Višestruki izbor</span></div>
+            <div class="source">2015., ljetni rok, zadatak 9</div>
+            <div class="prompt">Koji je binarni zapis dekadskoga broja 29<sub>(10)</sub>?</div>
+            <div class="options"><div class="option">A. 1011</div><div class="option">B. 1101</div><div class="option">C. 10111</div><div class="option">D. 11101</div></div>
+          </article>
+
+          <article class="question" data-type="mcq" data-search="51 2015 ljetni rok zadatak 10 koji je binarni zapis heksadekadskoga broja e01,3 16">
+            <div class="question-top"><span class="q-id">51.</span><span class="tag mcq">Višestruki izbor</span></div>
+            <div class="source">2015., ljetni rok, zadatak 10</div>
+            <div class="prompt">Koji je binarni zapis heksadekadskoga broja E01,3<sub>(16)</sub>?</div>
+            <div class="options"><div class="option">A. 111000000001,0011</div><div class="option">B. 11101,11</div><div class="option">C. 111000000001,11</div><div class="option">D. 110001,0011</div></div>
+          </article>
+
+          <article class="question" data-type="open" data-search="52 2015 ljetni rok zadatak 24 koji je dekadski zapis oktalnoga broja 53,4 8">
+            <div class="question-top"><span class="q-id">52.</span><span class="tag open">Otvoreni</span></div>
+            <div class="source">2015., ljetni rok, zadatak 24</div>
+            <div class="prompt">Koji je dekadski zapis oktalnoga broja 53,4<sub>(8)</sub>?</div>
+          </article>
+
+          <article class="question" data-type="open" data-search="53 2015 ljetni rok zadatak 25 koji je heksadekadski zapis oktalnoga broja 25,2 8">
+            <div class="question-top"><span class="q-id">53.</span><span class="tag open">Otvoreni</span></div>
+            <div class="source">2015., ljetni rok, zadatak 25</div>
+            <div class="prompt">Koji je heksadekadski zapis oktalnoga broja 25,2<sub>(8)</sub>?</div>
+          </article>
+
+          <article class="question" data-type="mcq" data-search="54 2015 jesenski rok zadatak 9 koji je heksadekadski zapis dekadskoga broja 30 10">
+            <div class="question-top"><span class="q-id">54.</span><span class="tag mcq">Višestruki izbor</span></div>
+            <div class="source">2015., jesenski rok, zadatak 9</div>
+            <div class="prompt">Koji je heksadekadski zapis dekadskoga broja 30<sub>(10)</sub>?</div>
+            <div class="options"><div class="option">A. E1</div><div class="option">B. 1E</div><div class="option">C. E</div><div class="option">D. 48</div></div>
+          </article>
+
+          <article class="question" data-type="mcq" data-search="55 2015 jesenski rok zadatak 10 koji je binarni zapis dekadskoga broja 25,5 10">
+            <div class="question-top"><span class="q-id">55.</span><span class="tag mcq">Višestruki izbor</span></div>
+            <div class="source">2015., jesenski rok, zadatak 10</div>
+            <div class="prompt">Koji je binarni zapis dekadskoga broja 25,5<sub>(10)</sub>?</div>
+            <div class="options"><div class="option">A. 10011,1</div><div class="option">B. 11001,01</div><div class="option">C. 11001,1</div><div class="option">D. 10011,01</div></div>
+          </article>
+
+          <article class="question" data-type="open" data-search="56 2015 jesenski rok zadatak 24 napišite oktalni zapis heksadekadskoga broja a3,8 16">
+            <div class="question-top"><span class="q-id">56.</span><span class="tag open">Otvoreni</span></div>
+            <div class="source">2015., jesenski rok, zadatak 24</div>
+            <div class="prompt">Napišite oktalni zapis heksadekadskoga broja A3,8<sub>(16)</sub>.</div>
+          </article>
+
+          <article class="question" data-type="open" data-search="57 2015 jesenski rok zadatak 25 koji je heksadekadski zapis binarnoga broja 11111101011,101 2">
+            <div class="question-top"><span class="q-id">57.</span><span class="tag open">Otvoreni</span></div>
+            <div class="source">2015., jesenski rok, zadatak 25</div>
+            <div class="prompt">Koji je heksadekadski zapis binarnoga broja 11111101011,101<sub>(2)</sub>?</div>
+          </article>
+
+          <article class="question" data-type="mcq" data-search="58 2016 ljetni rok zadatak 9 koji je rezultat zbrajanja binarnih brojeva 1101011 i 10101110">
+            <div class="question-top"><span class="q-id">58.</span><span class="tag mcq">Višestruki izbor</span></div>
+            <div class="source">2016., ljetni rok, zadatak 9</div>
+            <div class="prompt">Koji je rezultat zbrajanja binarnih brojeva 1101011 i 10101110?</div>
+            <div class="options"><div class="option">A. 11001</div><div class="option">B. 10011001</div><div class="option">C. 100011001</div><div class="option">D. 110000100</div></div>
+          </article>
+
+          <article class="question" data-type="mcq" data-search="59 2016 ljetni rok zadatak 10 kako glasi broj 1110,01112 zapisan u heksadekadskome brojevnom sustavu">
+            <div class="question-top"><span class="q-id">59.</span><span class="tag mcq">Višestruki izbor</span></div>
+            <div class="source">2016., ljetni rok, zadatak 10</div>
+            <div class="prompt">Kako glasi broj 1110,0111<sub>2</sub> zapisan u heksadekadskome brojevnom sustavu?</div>
+            <div class="options"><div class="option">A. 7,7</div><div class="option">B. E,E</div><div class="option">C. 7,E</div><div class="option">D. E,7</div></div>
+          </article>
+
+          <article class="question" data-type="mcq" data-search="60 2016 ljetni rok zadatak 12 koji od navedenih brojeva ima najveću dekadsku vrijednost">
+            <div class="question-top"><span class="q-id">60.</span><span class="tag mcq">Višestruki izbor</span></div>
+            <div class="source">2016., ljetni rok, zadatak 12</div>
+            <div class="prompt">Koji od navedenih brojeva ima najveću dekadsku vrijednost?</div>
+            <div class="options"><div class="option">A. 53<sub>(16)</sub></div><div class="option">B. 1010001<sub>(2)</sub></div><div class="option">C. 124<sub>(8)</sub></div><div class="option">D. 82<sub>(10)</sub></div></div>
+          </article>
+
+          <article class="question" data-type="open" data-search="61 2016 ljetni rok zadatak 23 koji je binarni zapis dekadskoga broja 21,125">
+            <div class="question-top"><span class="q-id">61.</span><span class="tag open">Otvoreni</span></div>
+            <div class="source">2016., ljetni rok, zadatak 23</div>
+            <div class="prompt">Koji je binarni zapis dekadskoga broja 21,125?</div>
+          </article>
+
+          <article class="question" data-type="open" data-search="62 2016 ljetni rok zadatak 24 koliko se puta pojavljuje niz znamenaka 011 u broju abcd16 kada je zapisan u binarnome brojevnom sustavu">
+            <div class="question-top"><span class="q-id">62.</span><span class="tag open">Otvoreni</span></div>
+            <div class="source">2016., ljetni rok, zadatak 24</div>
+            <div class="prompt">Koliko se puta pojavljuje niz znamenaka „011” u broju ABCD<sub>16</sub> kada je zapisan u binarnome brojevnom sustavu?</div>
+          </article>
+
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      Stranica je pripremljena prema javno dostupnom poglavlju “Brojevni sustavi: Pitanja s provedenih ispita” iz arhive CARNET Loomena.
+    </div>
+  </footer>
+
+  <script>
+    (function () {
+      const root = document.documentElement;
+      const themeToggle = document.querySelector('[data-theme-toggle]');
+      let currentTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+      root.setAttribute('data-theme', currentTheme);
+
+      function setIcon(theme) {
+        themeToggle.innerHTML = theme === 'dark'
+          ? '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"></circle><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"></path></svg>'
+          : '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>';
+        themeToggle.setAttribute('aria-label', theme === 'dark' ? 'Prebaci na svijetlu temu' : 'Prebaci na tamnu temu');
+      }
+      setIcon(currentTheme);
+
+      themeToggle.addEventListener('click', function () {
+        currentTheme = currentTheme === 'dark' ? 'light' : 'dark';
+        root.setAttribute('data-theme', currentTheme);
+        setIcon(currentTheme);
+      });
+
+      const searchInput = document.getElementById('searchInput');
+      const typeFilter = document.getElementById('typeFilter');
+      const questions = Array.from(document.querySelectorAll('.question'));
+      const resultsCount = document.getElementById('resultsCount');
+
+      function filterQuestions() {
+        const term = searchInput.value.trim().toLowerCase();
+        const type = typeFilter.value;
+        let visible = 0;
+
+        questions.forEach((question) => {
+          const matchesType = type === 'all' || question.dataset.type === type;
+          const matchesTerm = !term || question.dataset.search.includes(term) || question.innerText.toLowerCase().includes(term);
+          const show = matchesType && matchesTerm;
+          question.style.display = show ? '' : 'none';
+          if (show) visible += 1;
+        });
+
+        resultsCount.textContent = `Prikazano: ${visible} zadatka`;
+      }
+
+      searchInput.addEventListener('input', filterQuestions);
+      typeFilter.addEventListener('change', filterQuestions);
+      document.getElementById('printBtn').addEventListener('click', function () { window.print(); });
+    })();
+  </script>
+</body>
+</html>
